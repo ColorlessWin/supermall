@@ -1,12 +1,12 @@
 <template>
   <div class="tabBar-item" @click="onclick">
     <div class="switch" v-if="!isActive">
-      <slot name="img"></slot>
-      <slot name="title"></slot>
+      <div class="item-icon"><slot name="img"></slot></div>
+      <div class="title"><slot name="title"></slot></div>
     </div>
-    <div class="switch" v-else>
-      <slot name="img-active"></slot>
-      <slot name="title"></slot>
+    <div class="switch active" v-else>
+      <div class="item-icon"><slot name="img-active"></slot></div>
+      <div class="title"><slot name="title"></slot></div>
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
 
   computed: {
     isActive: function() {
-      return this.$route.path.indexOf(this.href) !== 1
+      return this.$route.path.indexOf(this.href) !== -1
     }
   }
 }
@@ -52,12 +52,17 @@ export default {
     width: 100%;
   }
 
-  .tabBar-item .item-icon {
+  .tabBar-item .switch .item-icon > * {
     width: 25px;
   }
 
-  .tabBar-item .lable {
-    margin-top: 3px;
+  .tabBar-item .title > * {
+    /*margin-top: 3px;*/
     font-size: 12px;
+  }
+
+  .tabBar-item .active .title > * {
+    /*margin-top: 3px;*/
+    color: orangered;
   }
 </style>
