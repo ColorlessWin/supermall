@@ -21,11 +21,12 @@ export default {
     background-color: #f6f6f6;
     height: 49px;
 
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     right: 0px;
     left: 0px;
 
+    z-index: 10;
     box-shadow: 0 -5px 6px rgba(200, 200, 200, 0.3)
   }
 </style>

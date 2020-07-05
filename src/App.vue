@@ -1,15 +1,12 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div id="app" @scroll.prevent="">
+    <keep-alive> <router-view/> </keep-alive>
     <main-tab-bar/>
   </div>
 </template>
 
 <script>
-  // import router from '../src/router'
-
   import MainTabBar from "./components/context/MainTabBar.vue";
-
 
   export default {
     name: 'App',
