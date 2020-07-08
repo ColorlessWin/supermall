@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="onClick">
     <img :src="goodsInfo.show.img" @load="$bus.$emit('image-loaded')" alt="">
     <div class="goods-info">
       <div class="title">{{goodsInfo.title}}</div>
@@ -16,6 +16,16 @@
       goodsInfo: {
         type: Object,
         default: ()=> {}
+      }
+    },
+
+    mounted() {
+      // console.log(this.goodsInfo)
+    },
+
+    methods: {
+      onClick() {
+        this.$router.push(`/detail/${this.goodsInfo.iid}`)
       }
     }
   }

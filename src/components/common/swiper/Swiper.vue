@@ -1,9 +1,13 @@
 <template>
-
-  <div @touchstart.prevent="touchStart" @touchmove.prevent="touchMove" @touchend.prevent="touchEnd"
-        id="swiper">
-    <div v-bind:style="transition"
-         class="wrap"><slot></slot></div>
+  <div @touchstart.prevent="touchStart" @touchmove.prevent="touchMove" 
+       @touchend.prevent="touchEnd" id="swiper">
+    <div v-bind:style="transition" class="wrap">
+      <slot></slot>
+    </div>
+    <div v-if="sideCount != 1" class="indicator">
+        <div v-for="(temp, _index) in sideCount" :class="{active: index == _index}"
+        class="point"></div>
+    </div>
   </div>
 </template>
 
@@ -23,13 +27,19 @@
         perClientX: 0,
 
         transition: {
-          transition: 'all 0.8s',
+          transition: 'all 0.3s',
           transform: 'translate(0px, 0)'
         }
       }
     },
 
     methods: {
+
+      range(max) {
+        let arr = []
+        for (let i = 0; i < max; i++) arr.push(i)
+        return arr
+      },
 
       touchStart(ev) {
         this.isTouch = true
@@ -47,7 +57,7 @@
         let next_offset = -(this.nextIndex() * this.width)
         if (Math.abs(this.side_offset - per_offset) > Math.abs(this.side_offset - next_offset)) {
           this.go(this.nextIndex())
-        }else {
+        } else {
           this.go(this.perIndex())
         }
       },
@@ -57,12 +67,12 @@
         this.perClientX = ev.changedTouches[0].clientX
         this.side_offset = touch_offset + this.side_offset
         this.side_offset = Math.min(0, Math.max(-(this.wrapWidth - this.width), this.side_offset))
-        this.side_move(this.side_offset)       
+        this.side_move(this.side_offset)
       },
 
       go(index) {
         this.index = index
-        this.side_offset =  -(index * this.width)
+        this.side_offset = -(index * this.width)
         this.side_move(this.side_offset)
       },
 
@@ -71,12 +81,12 @@
       },
 
       isTransition(flag) {
-        if(!flag) this.transition.transition = 'none'
+        if (!flag) this.transition.transition = 'none'
         else this.transition.transition = 'all 0.8s'
       },
 
       nextIndex() {
-        let index  = this.index + 1 > this.sideCount - 1? 0 : this.index + 1
+        let index = this.index + 1 > this.sideCount - 1 ? 0 : this.index + 1
         return index
       },
 
@@ -86,11 +96,11 @@
       },
 
       setTimer() {
-        this.timer = setInterval(()=> {
+        this.timer = setInterval(() => {
           if (this.isTouch) return
 
           this.index = this.nextIndex()
-          this.go( this.index)
+          this.go(this.index)
         }, 4000)
       }
     },
@@ -111,6 +121,8 @@
 
 <style scoped>
   #swiper {
+    position: relative;
+
     width: 100%;
     overflow: hidden;
   }
@@ -119,7 +131,28 @@
     display: none;
   }
 
-  #swiper > div {
+  #swiper>div {
     display: flex;
   }
+
+  #swiper .indicator {
+    position: absolute;
+    bottom: 20px;
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  #swiper .indicator .point{
+    height: 9px;
+    width: 9px;
+    background-color: white;
+    border-radius: 50%;
+
+    margin: 0 5px;    
+  }
+
+  #swiper .indicator .active {
+    background-color: red !important;
+  }
+
 </style>

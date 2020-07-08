@@ -35,13 +35,14 @@
     getHomeMultiDate,
   } from "../../network/home";
 
-  import TopBar from "@/components/common/topbar/TopBar";
-  import HomeSwiper from "./childComps/HomeSwiper";
-  import FeatureView from "./childComps/FeatureView";
-  import RecommendView from "./childComps/RecommendView";
-  import { Multepager, Page } from '@/components/common/multepager'
-  import GoodsList from "./childComps/GoodsList";
   import Scroll from "../../components/common/scroll/Scroll";
+  import { Multepager, Page } from '@/components/common/multepager'
+  import TopBar from "@/components/common/topbar/TopBar";
+
+  import HomeSwiper from "./CComps/HomeSwiper";
+  import FeatureView from "./CComps/FeatureView";
+  import RecommendView from "./CComps/RecommendView";
+  import GoodsList from "./CComps/GoodsList";
 
   export default {
     name: "Home",

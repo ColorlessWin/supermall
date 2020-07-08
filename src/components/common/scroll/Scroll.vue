@@ -16,24 +16,30 @@
     data() {
       return {
         scroll,
+        x: 0,
+        y: 0
       }
     },
 
-    created() {
-
+    activated () { 
+      this.scroll.refresh()
+      this.scroll.scrollTo(this.x, this.y, 0)
     },
 
-    
+    deactivated () {
+      this.x = this.scroll.x
+      this.y = this.scroll.y
+    },
 
     mounted() {
       this.scroll = new BScroll(this.$el, {
         click: this.click,
         stopPropagation: this.stopPropagation,
         probeType: 3,
-        pullUpLoad: true
+        pullUpLoad: true,
       })
 
-      const refresh = debounce(this.scroll.refresh, this.scroll,100)
+      const refresh = debounce(this.scroll.refresh, this.scroll, 100)
       this.$bus.$on('content-changed',  () => {
         refresh()                
       })
